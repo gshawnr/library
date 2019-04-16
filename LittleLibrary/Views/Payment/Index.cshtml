@@ -1,0 +1,137 @@
+﻿
+@model IEnumerable<LittleLibrary.ViewModels.PaymentVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Purchases</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Amount Paid
+            </th>
+            <th>
+                Paypal Email
+            </th>
+            <th>
+                Download
+            </th>         
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>           
+                <td>
+                    @Html.DisplayFor(modelItem => item.firstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bookTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.payPalEmail)
+                </td>
+                <td>
+                    <a style="font-weight: bold;" asp-controller="Home" asp-action="Details" asp-route-id="@item.bookID">Link </a>
+                </td>             
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<h3>Please complete transaction using Paypal to enable download!</h3>
+<br />
+
+<div id="paypal-button"></div>
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+    paypal.Button.render({
+        env: 'sandbox',
+        style: {
+            size: 'small',
+            color: 'gold',
+            shape: 'pill',
+            label: 'checkout'
+        },
+        client: {
+            sandbox: 'AaK4B1HAG23qy9iHIv_zK0K_8SJzHbjj5kgveqefNf382vDJ0Z3ohSxDBFAQ3bGJE4X5uMhZuQ7HjwZI',
+        },
+
+        commit: true,
+
+        payment: function (data, actions) {
+            return actions.payment.create({
+                payment: {
+                    transactions: [{
+                        amount: { total: @ViewBag.TotalPrice, currency: 'USD' }
+                    }
+                    ]
+                }
+            });
+        },
+
+        onAuthorize: function (data, actions) {
+            return actions.payment.execute().then(function (payment) {
+                var dataObject = {
+                    "intent":           payment.intent,
+                    "paymentId":        payment.id,
+                    "create_time":      payment.create_time,
+                    "paymentState":     payment.state,
+                    "PaypalEmail":       payment.payer.payer_info.email,
+                    "FirstName":   payment.payer.payer_info.first_name,
+                    "LastName":    payment.payer.payer_info.last_name,
+                    "CountryCode": payment.payer.payer_info.country_code,
+                    "paymentMethod":    payment.payer.payment_method,
+                    "payerStatus":      payment.payer.status,
+                    "amount":           payment.transactions[0].amount.total,
+                    "currency":         payment.transactions[0].amount.currency,
+                }
+
+
+                $.ajax({
+                    type: "post",
+                    url: "/Payment/PaySuccess",
+                    data: JSON.stringify(dataObject),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+
+                    success: function (msg) {
+                        window.location.href
+                            = "/Payment/Index";
+                    },
+
+                    error: function (msg) {
+                        alert("fail: " + JSON.stringify(msg));
+                    }
+                });
+            })
+        },
+
+        onCancel: function (data, actions) {
+            /*
+            * Buyer cancelled the payment
+            */
+        },
+    }, '#paypal-button');
+</script>
+

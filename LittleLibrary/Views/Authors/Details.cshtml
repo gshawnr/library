@@ -1,0 +1,67 @@
+﻿@model IEnumerable<LittleLibrary.Models.Books>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<br />
+
+<div>
+    <h4>Author Profile</h4>
+    <hr />
+    <dl class="dl-horizontal" style="margin-left:-80px;">
+        <dt>
+            First Name:
+        </dt>
+        <dd>
+            @ViewData["AuthorFirstName"]
+        </dd>
+        <dt>
+            Last Name:
+        </dt>
+        <dd>
+            @ViewData["AuthorLastName"]
+        </dd>
+        <dt>
+            Profile:
+        </dt>
+        <dd>
+            @ViewData["AuthorProfile"]
+        </dd>
+    </dl>
+
+    <h4>Books written : </h4>
+    @foreach (var item in Model)
+    {
+        <div class="row" style="display: inline-block; margin: 30px 20px 10px 20px">
+            <div class="col-xs-4">
+                <div class="thumbnail" style="width: 25rem;">
+                    @if (item.BookCover == null)
+                    {
+                        <img src="~/images/PicNotAvail.jpeg" style="max-width:100%;max-height:100%" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Action("RenderImage", "Authors", new { id = item.BookId})" style="width:100%; height:230px" />
+                    }
+                    <div class="card-body" style="border-top:2px solid dodgerblue; margin-top: 10px; padding-top: 10px;">
+                        <h5 style="display:inline; font-weight: bold;" class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                        <p style="float:right; font-weight: bold;">$@Html.DisplayFor(modelItem => item.Price)</p>
+                        <br />
+                        <br />
+                        <a style="font-weight: bold;" asp-controller="Home" asp-action="Details" asp-route-id="@item.BookId">Detail</a> |
+                        <a style="font-weight: bold;" asp-controller="UserCart" asp-action="AddToWishList" asp-route-id="@item.BookId">Add To Cart</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a style="font-weight: bold;" asp-action="DeleteBook" asp-route-id="@item.BookId">Delete</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

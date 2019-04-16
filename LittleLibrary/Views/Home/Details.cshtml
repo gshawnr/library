@@ -1,0 +1,67 @@
+﻿@model LittleLibrary.Models.Books
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h3 style="padding-top:30px; font-weight:bold">@Html.DisplayFor(model => model.Title)</h3>
+    <hr />
+
+    <h4 style="float:right; font-weight:bold">@Html.ActionLink("Download", "DownloadBook", "Authors", new { id = Model.BookId })</h4><br />
+
+    <div style="display:flex;">
+        <div>
+            @if (Model.BookCover == null)
+            {
+                <img src="~/images/PicNotAvail.jpeg" style="width:25%; height:250px" />
+            }
+            else
+            {
+                <img src="@Url.Action("RenderImage", "Authors", new { id = Model.BookId})" style="width:23rem; height:250px" />
+            }
+        </div>
+        <div style="display: flex; flex-direction:column; justify-content:space-between">
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Title)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Genre)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Genre)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DatePublished)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DatePublished)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Price)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Summary)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Summary)
+                    </dd>
+                </dl>
+
+                <h5 style="font-weight:bold"></h5>
+            </div>
+            <div style="margin-left:150px; font-weight:bold">
+                <a asp-controller="UserCart" asp-action="AddToWishList" asp-route-id="@Model.BookId">Add To Wishlist</a> |
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

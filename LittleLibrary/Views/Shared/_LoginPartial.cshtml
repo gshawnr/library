@@ -1,0 +1,41 @@
+@using Microsoft.AspNetCore.Identity
+@using LittleLibrary.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a style="color: white; font-weight: bold;" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Account
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" style="background: #7ba237;">
+                    <li><a style="color: white; font-weight: bold;" asp-controller="Payment" asp-action="GetAccountDetails">Purchase History</a></li>
+                    <li>
+                        <button style="color: white; font-weight: bold;" type="submit" class="btn btn-link navbar-btn navbar-link" id="logout">Logout</button>
+                    </li>
+                </ul>
+            </li>
+            @*<li>
+                <a style="color: white; font-weight: bold;" asp-controller="Payment" asp-action="GetAccountDetails">Account</a>
+            </li>
+            <li>
+                <button style="color: white; font-weight: bold;" type="submit" class="btn btn-link navbar-btn navbar-link" id="logout">Logout</button>
+            </li>*@
+        </ul>
+    </form>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a style="color: white; font-weight: bold;" asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+        <li><a style="color: white; font-weight: bold;" asp-area="Identity" asp-page="/Account/Login">Login</a></li>
+    </ul>
+}

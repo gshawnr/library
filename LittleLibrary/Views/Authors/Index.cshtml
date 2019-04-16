@@ -1,0 +1,40 @@
+﻿@model IEnumerable<LittleLibrary.Models.Authors>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form role="search" asp-action="Index" method="get" style="margin : 20px 0px;">
+    <div class="input-group add-on">
+        <input class="form-control" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="Search by author name..." type="text" required>
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit">Go</button>
+        </div>
+    </div>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Author Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname) @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.AuthorId">Detail</a>
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
