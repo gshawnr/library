@@ -2,35 +2,11 @@
 
 
 ### Summary
-A platform that allows established and budding authors to publish and retail their work online.  The site will allow authors to publish content of various formats from articles and short stories to full length novels. 
-
-[OneStopShop](https://docs.google.com/document/d/1qrxTcHthvI1PUPQSwg_e3Bfq_Ciz7zvudymixWPFFB8/edit): Planning Documents
-
-* Admin
-  * Alter Users/Roles
-  * Test Admin:
-      * Email: gshawnr@gmail.com
-      * Password: P@ssw0rd!
-* Authors
-  * Upload books
-  * Remove own books
-  * Test Author:
-     * Email: CharlesDickens@email.com
-     * Password: P@ssw0rd!
-* Users
-  * Add books to cart
-  * Purchase books
-  * Test User:
-     * Email: philipw@professor.gov
-     * Password: P@ssw0rd!
+A project to create a platform that allows established and budding authors to publish and retail their work online.  The site would allow authors to publish content of various formats from articles and short stories to full length novels. 
 
 [Little Library](https://littlelibrary20190125030031.azurewebsites.net/): Hosted Application
 
-
-
-
-
-We have added an API for the Books portion of our application. Included in the javascript are the relevant fields for each book.
+API for the Books portion of our application. Included in the javascript are the relevant fields for each book.
 
 Javascript Script:
 
