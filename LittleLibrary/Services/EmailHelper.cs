@@ -30,7 +30,7 @@ namespace LittleLibrary.Services
                                  ? _emailSettings.ToEmail : recipient;
 
                 mail.To.Add(new MailAddress(toEmail));
-                mail.CC.Add(new MailAddress(_emailSettings.CCEmail));
+                mail.CC.Add(new MailAddress("gshawnr@icloud.com"));
 
                 // Subject and multipart/alternative Body
                 mail.Subject = subject;

@@ -28,6 +28,7 @@ namespace LittleLibrary.Services
             };
 
             myMessage.To.Add(new MailAddress(email));
+            myMessage.CC.Add(new MailAddress(_emailSettings.CCEmail));
             myMessage.Subject = subject;
 
             myMessage.AlternateViews.Add(
